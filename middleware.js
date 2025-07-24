@@ -1,12 +1,10 @@
 import { NextResponse } from "next/server";
-import jwt from "jsonwebtoken";
 import { jwtVerify } from "jose";
 
-export async function  middleware(req) {
+export async function middleware(req) {
   const token = req.cookies.get("token")?.value;
   const url = req.nextUrl.clone();
 
-  // No token at all
   if (!token) {
     if (url.pathname.startsWith("/admin") || url.pathname.startsWith("/user")) {
       return NextResponse.redirect(new URL("/", req.url));
@@ -15,21 +13,21 @@ export async function  middleware(req) {
   }
 
   try {
-    
-    const decoded = jwtVerify(token, process.env.JWT_SECRET);
-//    console.log(decoded.role)
-//     //Role-based access control
-    // if (url.pathname.startsWith("/admin")) {
-    //   return NextResponse.redirect(new URL("/unauthorized", req.url));
-    // }
+    const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+    const { payload } = await jwtVerify(token, secret);
 
-//     if (url.pathname.startsWith("/user") && !["user", "admin"].includes(decoded.role)) {
-//       return NextResponse.redirect(new URL("/unauthorized", req.url));
-//     }
+    // 🔐 Role-based access control
+    if (url.pathname.startsWith("/admin") && payload.role !== "admin") {
+      return NextResponse.redirect(new URL("/unauthorized", req.url));
+    }
+
+    if (url.pathname.startsWith("/user") && !["user", "admin"].includes(payload.role)) {
+      return NextResponse.redirect(new URL("/unauthorized", req.url));
+    }
 
     return NextResponse.next();
   } catch (err) {
-    console.log(err)
+    console.error("JWT Verify Error:", err);
     return NextResponse.redirect(new URL("/", req.url));
   }
 }
@@ -37,5 +35,3 @@ export async function  middleware(req) {
 export const config = {
   matcher: ["/admin/:path*", "/user/:path*"],
 };
-
-
