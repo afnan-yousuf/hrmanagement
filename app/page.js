@@ -39,7 +39,7 @@ export default function Home() {
         setMsg(data.message);
       }
     } catch (error) {
-      console.log("API not working", error);
+      // console.log("API not working", error);
     }
   };
 

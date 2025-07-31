@@ -8,7 +8,7 @@ export async function POST(req){
     await connectDB()
     const {name, email, password, designation, joiningDate, salary} = await req.json();
 
-    console.log(email)
+    // console.log(email)
 
     const userExist = await User.findOne({email})
     if(userExist){
@@ -17,7 +17,7 @@ export async function POST(req){
 
    
     const hashedPassword = await bcyprt.hash(password, 10);
-console.log(hashedPassword)
+// console.log(hashedPassword)
     const user = await User.create({name: name, email: email, password: hashedPassword})
     
     const employee = await Employee.create({
