@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { jwtVerify } from "jose";
 
 export default function Home() {
   const router = useRouter();
@@ -18,13 +19,19 @@ export default function Home() {
 
       const data = await res.json();
 
-      console.log(data);
-
       if (res.ok && data.success) {
         if (data.token) {
-          console.log("Login")
+         
           document.cookie = `token=${data.token}; path=/`;
-          router.push("/admin");
+
+          if(data.role === "admin"){
+            router.push("/admin");
+          }
+          else{
+            router.push("/user");
+          }
+
+          
         } else {
           setMsg("Token Not Found");
         }

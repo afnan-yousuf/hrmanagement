@@ -27,5 +27,5 @@ export async function POST(req) {
     process.env.JWT_SECRET,
     { expiresIn: "1h" }
   );
-  return Response.json({ message: "Valid", token: token, success: true });
+  return Response.json({ message: "Valid", token: token, success: true, role: user.role });
 }

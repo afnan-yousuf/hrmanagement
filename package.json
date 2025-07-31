@@ -9,13 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.1.1",
     "bcryptjs": "^3.0.2",
     "jose": "^6.0.12",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.16.4",
     "next": "15.4.3",
     "react": "19.1.0",
-    "react-dom": "19.1.0"
+    "react-dom": "19.1.0",
+    "react-hook-form": "^7.61.1",
+    "sweetalert2": "^11.22.2",
+    "yup": "^1.6.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
