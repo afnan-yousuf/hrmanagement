@@ -31,7 +31,8 @@ jobs:
 
       - name: Configure Kubeconfig
         run: echo "${{ secrets.KUBE_CONFIG }}" | base64 --decode > kubeconfig.yaml
-
+             export KUBECONFIG=$PWD/kubeconfig.yaml
+             
       - name: Update Kubernetes Deployment
         run: |
           kubectl --kubeconfig=kubeconfig.yaml \
