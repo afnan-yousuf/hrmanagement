@@ -47,6 +47,7 @@ export default function Home() {
     <>
       <div className="p-6 max-w-sm mx-auto flex flex-col items-center justify-center">
         <h1 className="text-xl font-bold mb-4">Login - HR Management</h1>
+        <p>This is changed</p>
         <input
           className="border p-2 w-full mb-2"
           placeholder="Email"
