@@ -30,7 +30,7 @@ jobs:
           version: v1.27.0
 
       - name: Configure Kubeconfig
-        run: echo "${{ secrets.KUBE_CONFIG }}" > kubeconfig.yaml
+        run: echo "${{ secrets.KUBE_CONFIG }}" | base64 --decode > kubeconfig.yaml
 
       - name: Update Kubernetes Deployment
         run: |
