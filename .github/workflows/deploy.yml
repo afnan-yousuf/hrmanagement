@@ -21,8 +21,8 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/secondapp:${{ github.sha }} .
-          docker push ${{ secrets.DOCKER_USERNAME }}/secondapp:${{ github.sha }}
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/secondapp:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/secondapp:latest
 
       - name: Set up kubectl
         uses: azure/setup-kubectl@v3
@@ -36,4 +36,4 @@ jobs:
         run: |
           kubectl --kubeconfig=kubeconfig.yaml \
           set image deployment/hr-app-deployment \
-          hr-app=${{ secrets.DOCKER_USERNAME }}/secondapp:${{ github.sha }}
+          hr-app=${{ secrets.DOCKER_USERNAME }}/secondapp:latest
